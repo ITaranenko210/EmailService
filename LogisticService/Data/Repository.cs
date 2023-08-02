@@ -3,6 +3,15 @@ using System.Runtime.InteropServices;
 
 namespace LogisticService.Data
 {
+    public interface IRepository<TEntity>
+    {
+        public void Create<T>(T entity);
+        public IEnumerable<TEntity> Get();
+        public void Update(TEntity entity);
+        public void Delete<T>(T entity);
+
+
+    }
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly IApplicationDbContext _context;
@@ -21,13 +30,5 @@ namespace LogisticService.Data
         public void Update(TEntity entity) => _context.SetModified(entity);
     }
 
-    public interface IRepository<TEntity>
-    {
-        public void Create<T>(T entity);
-        public IEnumerable<TEntity> Get();
-        public void Update(TEntity entity);
-        public void Delete<T>(T entity);
-
-
-    }
+    
 }
