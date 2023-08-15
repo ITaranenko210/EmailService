@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "5Cls+xj90+0HHqlUSelSNJghTwQdgn41jBkhvQeWKDo6BPbwyj4eF8cI7Bg09ujoVqbRNTrXGRm5vPuq1om3KA==",
+  "dgSpecHash": "pitt/+LHLkLCOiqVd5uHVoLMQ0A/MYGd+0e3kbyv0XniAidAJEUhT8Yv8vrHzznVy3wODSgotdRBwXvVhVK6sA==",
   "success": true,
   "projectFilePath": "D:\\Projects\\EmailService\\LogisticService\\LogisticService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hp\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\Hp\\.nuget\\packages\\elasticsearch.net\\7.17.5\\elasticsearch.net.7.17.5.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\fluentemail.core\\3.0.2\\fluentemail.core.3.0.2.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\fluentemail.mailkit\\3.0.2\\fluentemail.mailkit.3.0.2.nupkg.sha512",

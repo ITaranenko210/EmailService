@@ -1,0 +1,23 @@
+[33mcommit c33557f1074b0f26c58c7e0fe50b3f93c977f6f0[m[33m ([m[1;36mHEAD -> [m[1;32mInitializing[m[33m)[m
+Author: Illia <taranenko210@icloud.com>
+Date:   Mon Aug 14 20:59:41 2023 +0200
+
+    added google maps api, refactored work case model
+
+[33mcommit 907edd4504c0d28a14e1b439fe47852f91c60959[m
+Author: Illia <taranenko210@icloud.com>
+Date:   Wed Aug 2 22:31:30 2023 +0200
+
+    Added email service logic, enable the mailkit labrary
+
+[33mcommit 3004d48283f6f29b031f2a971ce6834d62fbc410[m
+Author: Illia <taranenko210@icloud.com>
+Date:   Tue Jul 25 20:43:42 2023 +0200
+
+    Initialized the project and added startup funcionality
+
+[33mcommit bafe9561e250c925c6049240ad31c71657246eef[m[33m ([m[1;32mmain[m[33m, [m[1;32mdev[m[33m)[m
+Author: ITaranenko210 <49164249+ITaranenko210@users.noreply.github.com>
+Date:   Thu Jul 20 03:11:02 2023 +0300
+
+    Initial commit
