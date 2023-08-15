@@ -1,5 +1,8 @@
 using LogisticService.Data;
+using LogisticService.Data.ApplicationUsers;
 using LogisticService.Data.Emails;
+using LogisticService.Data.Options;
+using LogisticService.Data.WorkCases;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,13 +21,17 @@ internal class Program
         builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         builder.Services.AddScoped<IEmailRepository, EmailRepository>();
         builder.Services.AddScoped<IEmailService, EmailService>();
-
+        builder.Services.AddScoped<IWorkCaseRepository, WorkCaseRepository>();
         
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+
+        builder.Services.AddDefaultIdentity<ApplicationUser >(options => options.SignIn.RequireConfirmedAccount = true)
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddControllersWithViews();
+        builder.Services.Configure<MailOptions>(builder.Configuration.GetSection(MailOptions.Position));
+        builder.Services.Configure<GoogleMapsOptions>(builder.Configuration.GetSection(GoogleMapsOptions.Position));
 
         var app = builder.Build();
 
