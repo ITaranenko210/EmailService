@@ -1,4 +1,5 @@
-﻿using Google.Api.Gax.Grpc;
+﻿using Elasticsearch.Net;
+using Google.Api.Gax.Grpc;
 using Google.Maps.Routing.V2;
 using Google.Protobuf.Collections;
 using Google.Type;
@@ -14,7 +15,17 @@ namespace LogisticService.Data.WorkCases
     {
         public ComputeRoutesResponse ComputeRoute(WorkCase workCase)
         {
-            RoutesClient client = RoutesClient.Create();
+            using (var httpClient = new HttpClient())
+            {
+                var postData = new PostData
+                {
+                    Name = "John Doe",
+                    Age = 30,
+                    Address = "123 Main St"
+                };
+            }
+
+                RoutesClient client = RoutesClient.Create();
             CallSettings callSettings = CallSettings.FromHeader("X-Goog-FieldMask", "*");
             ComputeRoutesRequest request = new ComputeRoutesRequest
             {
