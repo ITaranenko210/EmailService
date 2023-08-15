@@ -3,47 +3,62 @@ using Google.Api.Gax.Grpc;
 using Google.Maps.Routing.V2;
 using Google.Protobuf.Collections;
 using Google.Type;
+using LogisticService.Data.GoogleMaps;
+using LogisticService.Data.Options;
 using LogisticService.Models;
+using Microsoft.Extensions.Options;
+using System.Text;
+using System.Text.Json;
 
 namespace LogisticService.Data.WorkCases
 {
     interface IWorkCaseService
     {
-        ComputeRoutesResponse ComputeRoute(WorkCase workCase);
+        ComputeRouteResp ComputeRoute(WorkCase workCase);
     }
     public class WorkCaseService : IWorkCaseService
     {
-        public ComputeRoutesResponse ComputeRoute(WorkCase workCase)
+        private readonly GoogleMapsOptions _options;
+
+        public WorkCaseService(IOptions<GoogleMapsOptions> options)
+        {
+            _options = options.Value;
+        }
+        public ComputeRouteResp ComputeRoute(WorkCase workCase)
         {
             using (var httpClient = new HttpClient())
             {
-                var postData = new PostData
+               var Address = new Uri(_options.BaseAddress + _options.ComputeRoutes + _options.APIKeySyntax + _options.APIKey);
+
+                WorkCaseRouteAdapter request = new WorkCaseRouteAdapter()
                 {
-                    Name = "John Doe",
-                    Age = 30,
-                    Address = "123 Main St"
+                    Origin = workCase.Origin,
+                    Destination = workCase.Destination,
+                    Intermediates = new List<Waypoint> (){ }
                 };
+                var json = System.Text.Json.JsonSerializer.Serialize(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var result = httpClient.PostAsync(Address, content).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var responseContent = result.Content.ReadAsStringAsync().Result;
+
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    return System.Text.Json.JsonSerializer.Deserialize<ComputeRouteResp>(responseContent, options);
+                   
+
+                }
+                else
+                {
+                    return new ComputeRouteResp();
+                }
             }
 
-                RoutesClient client = RoutesClient.Create();
-            CallSettings callSettings = CallSettings.FromHeader("X-Goog-FieldMask", "*");
-            ComputeRoutesRequest request = new ComputeRoutesRequest
-            {
-                Origin = workCase.Origin,
-                Destination = workCase.Destination,
-                TravelMode = workCase.TravelMode,
-                //Intermediates - ? I can't use intermediates in gRPC request cause it get prop, Schould change it in http request where I can use it. 
-                //{
-                //    Location = new Location { LatLng = new LatLng { Latitude = 37.419734, Longitude = -122.0827784 } }
-                //},
-                //Destination = new Waypoint
-                //{
-                //    Location = new Location { LatLng = new LatLng { Latitude = 37.417670, Longitude = -122.079595 } }
-                //},
-                //TravelMode = RouteTravelMode.Drive,
-                //RoutingPreference = RoutingPreference.TrafficAware
-            };
-            return client.ComputeRoutes(request, callSettings);
+               
            
         }
     }
