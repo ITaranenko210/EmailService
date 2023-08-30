@@ -5,6 +5,6 @@ namespace LogisticService.Data.ApplicationUsers
 {
     public class ApplicationUser : IdentityUser
     {
-        public RouteTravelMode TravelMode;
+       
     }
 }

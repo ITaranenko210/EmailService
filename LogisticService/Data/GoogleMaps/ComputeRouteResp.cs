@@ -1,6 +1,9 @@
-﻿namespace LogisticService.Data.GoogleMaps
+﻿using Google.Maps.Routing.V2;
+
+namespace LogisticService.Data.GoogleMaps
 {
-    public class ComputeRouteResponse
+    public class ComputeRouteResp
     {
+        
     }
 }

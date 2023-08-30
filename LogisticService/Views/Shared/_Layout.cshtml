@@ -1,7 +1,8 @@
 ﻿@using LogisticService.Data.ApplicationUsers
+@using LogisticService.Data.Options
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
-
+@inject GoogleMapsOptions GoogleMapsOptions
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LogisticService.styles.css" asp-append-version="true" />
+
 </head>
 <body>
     <header>
@@ -55,6 +57,12 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @if (!string.IsNullOrEmpty(GoogleMapsOptions.APIKey)){
+        var connectionString = $"https://maps.googleapis.com/maps/api/js?key={GoogleMapsOptions.APIKey}&callback=initMap";
+        
+        <script src="@connectionString" async defer></script>
+    }
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

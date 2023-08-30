@@ -1,8 +1,4 @@
-﻿using Elasticsearch.Net;
-using Google.Api.Gax.Grpc;
-using Google.Maps.Routing.V2;
-using Google.Protobuf.Collections;
-using Google.Type;
+﻿using Google.Maps.Routing.V2;
 using LogisticService.Data.GoogleMaps;
 using LogisticService.Data.Options;
 using LogisticService.Models;
@@ -34,9 +30,14 @@ namespace LogisticService.Data.WorkCases
                 {
                     Origin = workCase.Origin,
                     Destination = workCase.Destination,
-                    Intermediates = new List<Waypoint> (){ }
+                    Intermediates = new List<Waypoint>() { },
+                    TravelMode = workCase.TravelMode,
+                    RouteModifiers = new RouteModifiers() { AvoidFerries = true,
+                                                            AvoidTolls = false,
+                                                            AvoidHighways = false,
+                                                            AvoidIndoor = true},
                 };
-                var json = System.Text.Json.JsonSerializer.Serialize(request);
+                var json = JsonSerializer.Serialize(request);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var result = httpClient.PostAsync(Address, content).Result;
                 if (result.IsSuccessStatusCode)
@@ -48,7 +49,7 @@ namespace LogisticService.Data.WorkCases
                         PropertyNameCaseInsensitive = true
                     };
 
-                    return System.Text.Json.JsonSerializer.Deserialize<ComputeRouteResp>(responseContent, options);
+                    return JsonSerializer.Deserialize<ComputeRouteResp>(responseContent, options);
                    
 
                 }
@@ -61,5 +62,7 @@ namespace LogisticService.Data.WorkCases
                
            
         }
+
+       
     }
 }

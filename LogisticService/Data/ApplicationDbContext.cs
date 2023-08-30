@@ -1,5 +1,6 @@
 ﻿using LogisticService.Data.ApplicationUsers;
 using LogisticService.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,8 +23,6 @@ namespace LogisticService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<ApplicationUser>()
-                .Property(e => e.TravelMode);
         }
         public void Create(object entity) => Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Added;
         public void SetModified(object entity) => Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

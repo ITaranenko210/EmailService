@@ -4,6 +4,7 @@ using LogisticService.Data.Emails;
 using LogisticService.Data.Options;
 using LogisticService.Data.WorkCases;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 internal class Program
@@ -22,11 +23,11 @@ internal class Program
         builder.Services.AddScoped<IEmailRepository, EmailRepository>();
         builder.Services.AddScoped<IEmailService, EmailService>();
         builder.Services.AddScoped<IWorkCaseRepository, WorkCaseRepository>();
-        
 
 
 
-        builder.Services.AddDefaultIdentity<ApplicationUser >(options => options.SignIn.RequireConfirmedAccount = true)
+
+        builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddControllersWithViews();

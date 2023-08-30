@@ -8,5 +8,6 @@
         public string? BaseAddress { get;  }
         public string? ComputeRoutes { get;  }
         public string? ComputeRouteMatrix { get; }
+        public string? GetCurrentLocation { get; }
     }
 }
