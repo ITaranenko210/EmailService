@@ -1,7 +1,14 @@
-﻿namespace LogisticService.Data.Options
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LogisticService.Data.Options
 {
-    public class GoogleMapsOptions
+    interface IGoogleMapsOptions
     {
+
+    }
+    public class GoogleMapsOptions: IGoogleMapsOptions
+    {
+    
         public const string Position = "GoogleMapsSettings";
         public string? APIKey { get;  }
         public string? APIKeySyntax { get;  }

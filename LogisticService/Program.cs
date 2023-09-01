@@ -24,15 +24,17 @@ internal class Program
         builder.Services.AddScoped<IEmailService, EmailService>();
         builder.Services.AddScoped<IWorkCaseRepository, WorkCaseRepository>();
 
-
+        builder.Services.Configure<GoogleMapsOptions>(builder.Configuration.GetSection(GoogleMapsOptions.Position)).AddTransient<GoogleMapsOptions>();
+        builder.Services.Configure<MailOptions>(builder.Configuration.GetSection(MailOptions.Position));
+        builder.Services.AddOptions();
 
 
         builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddControllersWithViews();
-        builder.Services.Configure<MailOptions>(builder.Configuration.GetSection(MailOptions.Position));
-        builder.Services.Configure<GoogleMapsOptions>(builder.Configuration.GetSection(GoogleMapsOptions.Position));
+        
+       
 
         var app = builder.Build();
 
@@ -61,17 +63,17 @@ internal class Program
             pattern: "{controller=Home}/{action=Index}/{id?}");
         app.MapRazorPages();
 
-        using (var scope = app.Services.CreateScope())
-        {
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        //using (var scope = app.Services.CreateScope())
+        //{
+        //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            var roles = new[] { "Admin", "Manager", "Member" };
-            foreach (var role in roles)
-            {
-                if (!await roleManager.RoleExistsAsync(role))
-                    await roleManager.CreateAsync(new IdentityRole(role));
-            }
-        }
+        //    var roles = new[] { "Admin", "Manager", "Member" };
+        //    foreach (var role in roles)
+        //    {
+        //        if (!await roleManager.RoleExistsAsync(role))
+        //            await roleManager.CreateAsync(new IdentityRole(role));
+        //    }
+        //}
         app.Run();
     }
 }
