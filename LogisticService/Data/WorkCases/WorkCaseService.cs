@@ -22,45 +22,45 @@ namespace LogisticService.Data.WorkCases
         }
         public ComputeRouteResp ComputeRoute(WorkCase workCase)
         {
-            using (var httpClient = new HttpClient())
-            {
-               var Address = new Uri(_options.BaseAddress + _options.ComputeRoutes + _options.APIKeySyntax + _options.APIKey);
+            //using (var httpClient = new HttpClient())
+            //{
+            //   var Address = new Uri(_options.BaseAddress + _options.ComputeRoutes + _options.APIKeySyntax + _options.APIKey);
 
-                WorkCaseRouteAdapter request = new WorkCaseRouteAdapter()
-                {
-                    Origin = workCase.Origin,
-                    Destination = workCase.Destination,
-                    Intermediates = new List<Waypoint>() { },
-                    TravelMode = workCase.TravelMode,
-                    RouteModifiers = new RouteModifiers() { AvoidFerries = true,
-                                                            AvoidTolls = false,
-                                                            AvoidHighways = false,
-                                                            AvoidIndoor = true},
-                };
-                var json = JsonSerializer.Serialize(request);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var result = httpClient.PostAsync(Address, content).Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var responseContent = result.Content.ReadAsStringAsync().Result;
+            //    WorkCaseRouteAdapter request = new WorkCaseRouteAdapter()
+            //    {
+            //        Origin = workCase.Origin,
+            //        Destination = workCase.Destination,
+            //        Intermediates = new List<Waypoint>() { },
+            //        TravelMode = workCase.TravelMode,
+            //        RouteModifiers = new RouteModifiers() { AvoidFerries = true,
+            //                                                AvoidTolls = false,
+            //                                                AvoidHighways = false,
+            //                                                AvoidIndoor = true},
+            //    };
+            //    var json = JsonSerializer.Serialize(request);
+            //    var content = new StringContent(json, Encoding.UTF8, "application/json");
+            //    var result = httpClient.PostAsync(Address, content).Result;
+            //    if (result.IsSuccessStatusCode)
+            //    {
+            //        var responseContent = result.Content.ReadAsStringAsync().Result;
 
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
+            //        var options = new JsonSerializerOptions
+            //        {
+            //            PropertyNameCaseInsensitive = true
+            //        };
 
-                    return JsonSerializer.Deserialize<ComputeRouteResp>(responseContent, options);
-                   
+            //        return JsonSerializer.Deserialize<ComputeRouteResp>(responseContent, options);
 
-                }
-                else
-                {
-                    return new ComputeRouteResp();
-                }
-            }
 
-               
-           
+            //    }
+            //    else
+            //    {
+            //        return new ComputeRouteResp();
+            //    }
+            //}
+            return new ComputeRouteResp();
+
+
         }
 
        

@@ -3,6 +3,7 @@ using LogisticService.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 
 namespace LogisticService.Data
@@ -23,6 +24,11 @@ namespace LogisticService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<WorkCase>()
+                        .HasMany(e => e.WorkCaseLocations)
+                        .WithOne(e => e.WorkCase)
+                        .HasForeignKey(e => e.WorkCaseId)
+                        .HasPrincipalKey(e => e.Id);
         }
         public void Create(object entity) => Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Added;
         public void SetModified(object entity) => Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -31,7 +37,7 @@ namespace LogisticService.Data
 
         public DbSet<Email> Emails { get; set; }
         public DbSet<WorkCase> WorkCases { get; set; }
-     
+        public DbSet<WorkCaseLocation> WorkCaseLocations { get; set; } 
     }
     
 

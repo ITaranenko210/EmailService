@@ -4,7 +4,6 @@ using LogisticService.Data.Emails;
 using LogisticService.Data.Options;
 using LogisticService.Data.WorkCases;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 internal class Program
@@ -63,17 +62,17 @@ internal class Program
             pattern: "{controller=Home}/{action=Index}/{id?}");
         app.MapRazorPages();
 
-        //using (var scope = app.Services.CreateScope())
-        //{
-        //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        using (var scope = app.Services.CreateScope())
+        {
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-        //    var roles = new[] { "Admin", "Manager", "Member" };
-        //    foreach (var role in roles)
-        //    {
-        //        if (!await roleManager.RoleExistsAsync(role))
-        //            await roleManager.CreateAsync(new IdentityRole(role));
-        //    }
-        //}
+            var roles = new[] { "Admin", "Manager", "Member" };
+            foreach (var role in roles)
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                    await roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
         app.Run();
     }
 }
