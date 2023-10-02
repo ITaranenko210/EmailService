@@ -2,7 +2,7 @@
 @using LogisticService.Data.Options
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
-@inject GoogleMapsOptions GoogleMapsOptions
+@model GoogleMapsOptions 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,11 +31,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">Schedule</a>
+                        </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Deliveries" asp-action="Index">Deliveries</a>
                             </li>
+                            
                         }
                     </ul>
                     <partial name="_LoginPartial" />
@@ -58,11 +62,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js"></script> 
     
-    @if (!string.IsNullOrEmpty(GoogleMapsOptions.APIKey)){
-        var connectionString = $"https://maps.googleapis.com/maps/api/js?key={GoogleMapsOptions.APIKey}&callback=initMap";
-        
-        <script src="@connectionString" async defer></script>
-    }
+    
     
     @await RenderSectionAsync("Scripts", required: false)
 </body>

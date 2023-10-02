@@ -1,34 +1,40 @@
 ﻿using LogisticService.Data.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Text.Json;
 using System.Web;
 
 namespace LogisticService.Controllers
 {
     public class ScheduleController : Controller
     {
-        private readonly GoogleMapsOptions _options;
+        private readonly ITestOptions _options;
 
-        public ScheduleController(IOptions<GoogleMapsOptions> options)
+        public ScheduleController(ITestOptions options)
         {
-            _options = options.Value;
+            _options = options;
         }
         public IActionResult Index()
         {
-            return View();
+            return View(_options.GetOptions());
         }
-        public IActionResult GetDefaultMapOptions()
+    
+        public string GetDefaultMapOptions()
         {
             using (var httpClient = new HttpClient())
             {
-                var ip = HttpContext.Connection.LocalIpAddress;
-                var address = new Uri(_options.GetCurrentLocation + ip);
+               
+                var ip = Request.HttpContext.Connection.RemoteIpAddress;
+                var mapOptions = _options.GetOptions();
+                //var ip = HttpContext.Connection.LocalIpAddress;
+                var address = new Uri(mapOptions.GetCurrentLocation + "172.56.3.235");//+ ip);
                 var result = httpClient.GetAsync(address).Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return Json(result.Content.ReadAsStringAsync().Result);
+                    var response = result.Content.ReadAsStringAsync().Result;
+                    return response;
                 }
-                else return Json("");
+                else return string.Empty;
             }
            
         }

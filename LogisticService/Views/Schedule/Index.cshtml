@@ -1,5 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using System.Web.Optimization
+@using LogisticService.Data.Options
 @{
+    ViewData["Title"] = "Index";
+    
 }
+@model GoogleMapsOptions
+
+
+<h1>ScheduleDetails</h1>
+<div id="googleMap"></div>
+@section Scripts{
+    <script src="\js\maps_launch.js"></script>
+}
+@*@Scripts.Render("~\js\maps_launch")
+ 
+*@
+
+@*@section Scripts{*@
+    @*<script src="/js/maps_launch.js"></script>*@
+    @if (!string.IsNullOrEmpty(Model.APIKey))
+    {
+        var connectionString = $"https://maps.googleapis.com/maps/api/js?key={Model.APIKey}&callback=initMap";
+        <script  src="@connectionString" async defer></script>
+    }
+@*}*@
+

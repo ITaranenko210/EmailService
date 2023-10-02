@@ -1,3 +1,4 @@
+
 using LogisticService.Data;
 using LogisticService.Data.ApplicationUsers;
 using LogisticService.Data.Emails;
@@ -14,6 +15,10 @@ internal class Program
 
         // Add services to the container.
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        //++
+        builder.Configuration
+        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        //--
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -22,9 +27,11 @@ internal class Program
         builder.Services.AddScoped<IEmailRepository, EmailRepository>();
         builder.Services.AddScoped<IEmailService, EmailService>();
         builder.Services.AddScoped<IWorkCaseRepository, WorkCaseRepository>();
+        builder.Services.AddScoped<ITestOptions, TestOptions>();
 
         builder.Services.Configure<GoogleMapsOptions>(builder.Configuration.GetSection(GoogleMapsOptions.Position)).AddTransient<GoogleMapsOptions>();
         builder.Services.Configure<MailOptions>(builder.Configuration.GetSection(MailOptions.Position));
+        
         builder.Services.AddOptions();
 
 

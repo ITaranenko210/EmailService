@@ -1,4 +1,5 @@
-﻿using LogisticService.Models;
+﻿using LogisticService.Data.Options;
+using LogisticService.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +8,16 @@ namespace LogisticService.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ITestOptions _options;
+        public HomeController(ILogger<HomeController> logger, ITestOptions options)
         {
             _logger = logger;
+            _options = options;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(_options.GetOptions());
         }
 
         public IActionResult Privacy()

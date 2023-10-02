@@ -10,11 +10,11 @@ namespace LogisticService.Data.Options
     {
     
         public const string Position = "GoogleMapsSettings";
-        public string? APIKey { get;  }
-        public string? APIKeySyntax { get;  }
-        public string? BaseAddress { get;  }
-        public string? ComputeRoutes { get;  }
-        public string? ComputeRouteMatrix { get; }
-        public string? GetCurrentLocation { get; }
+        public string? APIKey { get; set; } = String.Empty;
+        public string? APIKeySyntax { get; set; } = String.Empty;
+        public string? BaseAddress { get; set; } = String.Empty;
+        public string? ComputeRoutes { get; set;  } = String.Empty;
+        public string? ComputeRouteMatrix { get; set; } = String.Empty; 
+        public string? GetCurrentLocation { get; set; } = String.Empty;
     }
 }
